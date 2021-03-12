@@ -48,8 +48,7 @@
 </template>
 
 <script>
-import axios from "axios";
-import { IMAGE_PATH } from "../config";
+import { API, API_KEY, IMAGE_PATH } from "../config";
 export default {
   name: "Movie",
   mounted() {
@@ -72,14 +71,7 @@ export default {
   },
   methods: {
     loadMovie() {
-      axios
-        .get(
-          process.env.VUE_APP_API_URI +
-            "movie/" +
-            this.$route.params.id +
-            "?api_key=" +
-            process.env.VUE_APP_API_KEY
-        )
+      API.get("movie/" + this.$route.params.id + API_KEY)
         .then((res) => {
           this.movie = res.data;
         })
@@ -88,14 +80,7 @@ export default {
         });
     },
     loadRelated() {
-      axios
-        .get(
-          process.env.VUE_APP_API_URI +
-            "movie/" +
-            this.$route.params.id +
-            "/similar?api_key=" +
-            process.env.VUE_APP_API_KEY
-        )
+      API.get("movie/" + this.$route.params.id + "/similar" + API_KEY)
         .then((res) => {
           this.related = res.data.results;
         })
